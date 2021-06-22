@@ -1,0 +1,31 @@
+#                            Github Actions Tutorial
+#                              Style Actions File
+
+name: Style
+# on means when to activate actions - defined here to run when we push to github
+on: 
+  push: 
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  style:
+    runs-on: ubuntu-latest
+    steps:
+      # -- Start of basic steps
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      # -- End of basic steps
+      # -- Start of pylint code
+      - name: Style-check with pylint
+        run: |
+          pip install pylint
+          find . -type f -name "*.py" | xargs pylint
+      # -- End of pylint code
+      # -- Start of Flake8 code
+      - name: Style-check with flake8
+        run: |
+          pip install flake8
+          flake8 .
+      # -- End of Flake8 code

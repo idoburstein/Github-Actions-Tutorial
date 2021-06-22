@@ -1,0 +1,39 @@
+#                            Github Actions Tutorial
+#                            Unit-Tests Actions File
+
+name: Unit-Test
+# on means when to activate actions - defined here to run when we push to github
+on: 
+  push: 
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  Unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      # -- Start of basic steps
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      # -- End of basic steps
+      # -- Start of Running the unit tests file - Basic Approach
+      - name: Unit-test
+        # Include your unit test file path (without the project name)
+        run: |  
+          python -m unittest discover
+      # -- End of Running the unit tests file - Basic Approach
+      # -- Start of Running the unit tests file with pytest
+      - name: Run unit tests with pytest
+        run: |
+          pip install pytest
+          pytest
+      # -- End of Running code coverage analysis
+      # line coverage
+      # -- https://github.com/dbrgn/coverage-badge
+      - name: Run coverage
+        run: |
+          pip install coverage
+          coverage run -m pytest
+          pip install coverage-badge
+          coverage-badge > coverage.svg

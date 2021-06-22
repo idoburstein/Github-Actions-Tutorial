@@ -1,0 +1,10 @@
+{
+    "python.pythonPath": "/Users/idoburstein/opt/anaconda3/bin/python",
+    "python.analysis.extraPaths": [
+        "./src", 
+    ],
+    "python.envFile": "${workspaceFolder}/.env",
+    "editor.rulers": [
+        80
+    ]
+}

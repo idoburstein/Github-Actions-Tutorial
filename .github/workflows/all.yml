@@ -1,0 +1,69 @@
+#                            Github Actions Tutorial
+#                           Every Action Actions File
+
+name: All
+# on means when to activate actions - defined here to run when we push to github  
+on: 
+  push:
+    branches: [main, testbranch]
+  pull_request:
+    branches: main
+
+jobs:
+  Style: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      # -- Pylint (style)
+      - name: Style-check with pylint
+        run: |
+          pip install pylint
+          find . -type f -name "*.py" | xargs pylint
+      # -- Pylint End
+      # -- Flake8 (style)
+      - name: Style-check with flake8
+        run: |
+          pip install flake8
+          flake8 .
+      # -- Flake8 End
+  Tests: 
+    runs-on: ubuntu-latest
+    needs: Style
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      # -- Unittest (unit tests)
+      - name: Unit-test
+        # Make sure all your tests are within a package 
+        # https://docs.python.org/3/library/unittest.html#unittest-test-discovery
+        run: |  
+          python -m unittest discover
+      # -- Unittest End
+      # -- Pytest (unit tests)
+      - name: Run unit tests with pytest
+        run: |
+          pip install pytest
+          pytest
+      # -- Pytest End
+  Coverage: 
+    runs-on: ubuntu-latest
+    needs: [Style, Tests]
+    steps:   
+      - name: Check out repository code
+        uses: actions/checkout@v2 
+      # -- Coverage check
+      - name: Run & Check coverage
+        run: |
+          pip install coverage
+          # The unitest way
+          # coverage run -m unittest discover
+          # The pytest way
+          pip install pytest
+          coverage run -m pytest
+          # Line Coverage Check > 70
+          coverage report --fail-under=70 **/*.py
+          coverage run --branch -m pytest
+          # Branch Coverage Check > 70
+          coverage report --fail-under=70 **/*.py
+      # -- Coverage End
