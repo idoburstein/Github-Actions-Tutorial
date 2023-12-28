@@ -1,6 +1,6 @@
 # Github Actions Tutorial - Python :snake:
 
-[![GitHub-Actions-Demo Actions Status](https://github.com/idoburstein/tryout/workflows/All/badge.svg)](https://github.com/idoburstein/tryout/actions)
+[![Tests & Style & Coverage](https://github.com/idoburstein/Github-Actions-Tutorial/actions/workflows/all.yml/badge.svg)](https://github.com/idoburstein/Github-Actions-Tutorial/actions/workflows/all.yml)
 
 * Server Environment, Version and Included Software are under "Set up job" 
 action -> "Virtual Environment"
